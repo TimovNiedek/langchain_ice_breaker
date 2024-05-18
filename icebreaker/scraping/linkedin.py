@@ -8,28 +8,42 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
     Args:
         linkedin_profile_url (str): LinkedIn profile URL.
         mock (bool): If True, return mock data.
+
+    Returns:
+        dict: LinkedIn profile data.
     """
 
     if mock:
-        linkedin_profile_url = os.environ['MOCK_LINKEDIN_PROFILE_URL']
-        return requests.get(linkedin_profile_url).json()
+        linkedin_profile_url = os.environ["MOCK_LINKEDIN_PROFILE_URL"]
+        data = requests.get(linkedin_profile_url).json()
 
     else:
-        api_key = os.environ['PROXYCURL_API_KEY']
-        headers = {'Authorization': 'Bearer ' + api_key}
-        api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
+        api_key = os.environ["PROXYCURL_API_KEY"]
+        headers = {"Authorization": "Bearer " + api_key}
+        api_endpoint = "https://nubela.co/proxycurl/api/v2/linkedin"
         params = {
-            'linkedin_profile_url': linkedin_profile_url,
+            "linkedin_profile_url": linkedin_profile_url,
         }
-        response = requests.get(api_endpoint,
-                                params=params,
-                                headers=headers)
-        return response.json()
-        
+        response = requests.get(api_endpoint, params=params, headers=headers)
+        data = response.json()
 
-if __name__ == '__main__':
+    data = {
+        k: v
+        for k, v in data.items()
+        if v not in (None, "", [], {})
+        and k
+        not in (
+            "background_cover_image_url",
+            "profile_pic_url",
+            "certifications",
+            "people_also_viewed",
+        )
+    }
+    return data
+
+
+if __name__ == "__main__":
     profile = scrape_linkedin_profile(
-        linkedin_profile_url='https://linkedin.com/in/timo-van-niedek/',
-        mock=True
+        linkedin_profile_url="https://linkedin.com/in/timo-van-niedek/", mock=True
     )
-    print(profile['full_name'])
+    print(profile["full_name"])
