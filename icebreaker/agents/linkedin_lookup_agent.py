@@ -7,7 +7,10 @@ from langchain_openai import ChatOpenAI
 from icebreaker.tools.tools import get_profile_url_tavily
 
 
-def lookup(name: str) -> str:
+def lookup(name: str, mock=False) -> str:
+    if mock:
+        return "https://nl.linkedin.com/in/timo-van-niedek"
+
     llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
 
     template = """Given the full name {name_of_person}, I want you to get me a link to their Linkedin profile page. Your answer should contain only a URL. The URL should not lead to anything other than their profile page."""
