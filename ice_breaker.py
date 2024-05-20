@@ -1,8 +1,8 @@
 from langchain.prompts.prompt import PromptTemplate
 from langchain_openai import ChatOpenAI
-from langchain.chains.llm import LLMChain
 from icebreaker.agents import linkedin_lookup_agent
 from icebreaker.scraping.linkedin import scrape_linkedin_profile
+
 
 def ice_break_with(name: str, mock=False) -> str:
     linkedin_url = linkedin_lookup_agent.lookup(name)

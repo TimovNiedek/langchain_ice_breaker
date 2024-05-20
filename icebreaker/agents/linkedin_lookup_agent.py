@@ -36,5 +36,6 @@ def lookup(name: str) -> str:
     linkedin_profile_url = result["output"]
     return linkedin_profile_url
 
+
 if __name__ == "__main__":
     print(lookup("Timo van Niedek"))
