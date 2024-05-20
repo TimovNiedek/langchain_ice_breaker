@@ -18,18 +18,15 @@
         <h1>Ice Breaker</h1>
         <form id="name-form">
             <input type="text" id="name" name="name" placeholder="Enter name">
+            <input type="checkbox" id="mock" name="mock" value="true"> Mock Data
             <button id="magic-button" type="submit">Do Your Magic</button>
         </form>
         <div id="result">
             <img id="profile-pic" src="" alt="Profile Picture" style="display: none; max-width: 100%; height: auto; border-radius: 50%; margin-bottom: 20px;">
             <h2>Summary</h2>
-            <p id="summary-and-facts"></p>
+            <p id="summary"></p>
             <h2>Interesting Facts</h2>
-            <div id="interests"></div>
-            <h2>Ice Breakers</h2>
-            <div id="ice-breakers"></div>
-            <h2>Topics of Interest</h2>
-            <div id="topics-of-interest"></div>
+            <div id="facts"></div>
         </div>
     </div>
     <script>
@@ -42,12 +39,12 @@
                     data: $('#name-form').serialize(),
                     type: 'POST',
                     success: function (response) {
+                        summary_and_facts = response.summary_and_facts;
                         $('#profile-pic').attr('src', response.picture_url); // Update the profile picture src attribute
                         $('#profile-pic').show(); // Show the profile picture
-                        $('#summary-and-facts').text(response.summary);
-                        $('#interests').html('<ul>' + response.facts.map(fact => '<li>' + fact + '</li>').join('') + '</ul>');
-                        $('#ice-breakers').html('<ul>' + response.ice_breakers.map(ice_breaker => '<li>' + ice_breaker + '</li>').join('') + '</ul>');
-                        $('#topics-of-interest').html('<ul>' + response.interests.map(topic => '<li>' + topic + '</li>').join('') + '</ul>');
+                        $('#summary').text(summary_and_facts.summary);
+                        // Create li items by mapping over summary_and_facts.facts
+                        $('#facts').html(summary_and_facts.facts.map(fact => `<li>${fact}</li>`).join(''));                        
                     },
                     error: function (error) {
                         console.log(error);
