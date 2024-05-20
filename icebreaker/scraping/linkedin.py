@@ -34,7 +34,6 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
         and k
         not in (
             "background_cover_image_url",
-            "profile_pic_url",
             "certifications",
             "people_also_viewed",
         )
