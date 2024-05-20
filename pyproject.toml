@@ -12,6 +12,7 @@ langchain-openai = "^0.1.7"
 langchainhub = "^0.1.15"
 flask = "^3.0.3"
 python-dotenv = "^1.0.1"
+langsmith = "^0.1.59"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.4.4"
